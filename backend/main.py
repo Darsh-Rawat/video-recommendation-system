@@ -1,8 +1,10 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
+from core.helper_funcs import get_videos
+
 origins = [
-    "https://localhost:5173",
+    "http://localhost:5173",
 ]
 
 app = FastAPI()
@@ -15,6 +17,16 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+# @app.get("/search/{query}")
+# async def endpoint(query:str) : 
+#     return get_videos(query)
+
+@app.get("/search/")
+async def endpoint(query:str) : 
+    return get_videos(query)
+    
+
+
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run("main:app", host="0.0.0.0", port=8000, reload=True)
+    uvicorn.run("main:app",reload=True)

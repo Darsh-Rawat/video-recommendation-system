@@ -1,4 +1,5 @@
 import React, {use, useState} from 'react'
+import axios from 'axios';
 import { IoIosSearch } from "react-icons/io";
 
 const SearchBar = ({ setResult }) => {
@@ -8,7 +9,8 @@ const SearchBar = ({ setResult }) => {
         if (!query) return;
 
         try {
-            const response = await axios.get(`https://your-api.com/search?q=${query}`);
+            const response = await axios.get(`http://127.0.0.1:8000/search/?query=${(query)}`);
+            setResult(response.data);
             console.log(response.data); // for now, just check the response
         } catch (error) {
             console.error("Error fetching data:", error);
@@ -18,14 +20,13 @@ const SearchBar = ({ setResult }) => {
 
     const handleKeyDown = (e) => {
         if (e.key === 'Enter') {
-            // fetchData(input);
-            setResult(input);
+            fetchData(input);
         }
     };
   return (
     <div className='input-wrapper bg-white w-[60%] rounded-2xl h-10 p-0 px-3.75 shadow-md flex items-center'>
         <input type="text" placeholder='Search' value={input} onChange={(e) => setInput(e.target.value)} onKeyDown={handleKeyDown}  className='bg-transparent border-none outline-none h-full w-full mr-1.25 text-md hover:cursor-text'/>
-        <IoIosSearch className='fill-blue-800 size-6 hover:cursor-pointer ' onClick={() => setResult(input)}/>
+        <IoIosSearch className='fill-blue-800 size-6 hover:cursor-pointer ' onClick={() => fetchData(input)}/>
     </div>
   )
 }
