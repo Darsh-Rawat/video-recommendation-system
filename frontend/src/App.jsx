@@ -11,7 +11,7 @@ function App() {
   const [result, setResult] = useState("");
 
   return (
-    <div className='App h-screen w-screen bg-[#eee]'>
+    <div className='App min-h-screen w-full bg-[#eee]'>
     <div className='search-bar-container pt-[1.5vh] w-[40%] m-auto flex flex-col items-center min-w-50'>
         <SearchBar setResult={setResult}/>
         <SearchResult input={result}/>

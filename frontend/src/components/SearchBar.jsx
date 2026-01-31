@@ -24,7 +24,7 @@ const SearchBar = ({ setResult }) => {
         }
     };
   return (
-    <div className='input-wrapper bg-white w-[60%] rounded-2xl h-10 p-0 px-3.75 shadow-md flex items-center'>
+    <div className='input-wrapper bg-white w-[60%] rounded-2xl h-10 p-0 px-3.75 shadow-md flex items-center sticky top-2'>
         <input type="text" placeholder='Search' value={input} onChange={(e) => setInput(e.target.value)} onKeyDown={handleKeyDown}  className='bg-transparent border-none outline-none h-full w-full mr-1.25 text-md hover:cursor-text'/>
         <IoIosSearch className='fill-blue-800 size-6 hover:cursor-pointer ' onClick={() => fetchData(input)}/>
     </div>
