@@ -6,7 +6,7 @@ def get_videos(query:str) -> list :
         query_texts=[f"{query}"],
         n_results=5
     )    
-    return result['ids'][0]
+    return result['documents'][0]
 
 
 

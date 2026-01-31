@@ -2,9 +2,14 @@ import React from "react";
 
 const SearchResult = ({ input }) => {
   return (
-    <div className="mt-4">
-      <p>Search Input: {input}</p>
-    </div>
+    <ul className="p-5">
+        <p>Results :</p>
+      {(input || []).map((video) => (
+        <li>
+          {video}
+        </li>
+      ))}
+    </ul>
   );
 };
 
