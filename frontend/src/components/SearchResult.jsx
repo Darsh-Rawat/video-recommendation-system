@@ -1,11 +1,11 @@
 import React from "react";
 import VideoCard from './VideoCard.jsx'
 
-const SearchResult = ({ input }) => {
+const SearchResult = ({ data }) => {
     return (
         <div className="search-result p-5">
-            {(input || []).map((title) => (
-                <VideoCard title={title} />
+            {(data || []).map((video) => (
+                <VideoCard key={video.id} video={video} />
             ))}
         </div>
     )
