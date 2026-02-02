@@ -1,23 +1,26 @@
 import { useState } from 'react'
+import { HashRouter as Router, Route, Routes } from 'react-router-dom'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
 import SearchBar from './components/SearchBar.jsx'
 import SearchResult from './components/SearchResult.jsx'
+import Home from './Pages/Home.jsx'
+import SearchPage from './pages/SearchPage';
+
 
 
 function App() {
-  const [count, setCount] = useState(0);
-  const [result, setResult] = useState("");
+    
+    return (
+        <Router>
+            <Routes>
+                <Route path='/' element={<Home />} />
+                <Route path='/search' element={<SearchPage />} />
 
-  return (
-    <div className='App min-h-screen w-full bg-[#eee]'>
-    <div className='search-bar-container pt-[1.5vh] w-[40%] m-auto flex flex-col items-center min-w-50'>
-        <SearchBar setResult={setResult}/>
-        <SearchResult data={result}/>
-    </div>
-    </div>
-  )
+            </Routes>
+        </Router>
+    )
 }
 
 export default App
