@@ -2,7 +2,7 @@ import chromadb
 import pandas as pd
 
 # Initialize ChromaDB
-client = chromadb.PersistentClient(path=r"D:\Code\video-recommendation-system\backend\data")
+client = chromadb.PersistentClient(path=r"D:\Code\video-recommendation-system\backend\data\chromadb")
 
 # Create or Get a collection
 collection = client.get_or_create_collection(
