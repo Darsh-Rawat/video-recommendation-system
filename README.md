@@ -1,5 +1,7 @@
 # Setup & Running the Project
-
+## Prerequisites
+- PostgreSQL
+- Uv
 ### 1. Clone Repository
 ```bash
 git clone https://github.com/Darsh-Rawat/video-recommendation-system.git
