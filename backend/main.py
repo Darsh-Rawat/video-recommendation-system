@@ -1,7 +1,8 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from core.helper_funcs import get_videos
+from core.helper_funcs import get_videos, store_user_data
+from core.models import UserData
 
 origins = [
     "http://localhost:5173",
@@ -24,7 +25,12 @@ app.add_middleware(
 @app.get("/search/")
 async def endpoint(query:str) : 
     return get_videos(query)
-    
+
+@app.post("/watch")
+async def endpoint(userData: UserData) : 
+    # print(type(userData.video_id))
+    # print(type(userData.title))
+    store_user_data(userData.video_id, userData.title)
 
 
 if __name__ == "__main__":

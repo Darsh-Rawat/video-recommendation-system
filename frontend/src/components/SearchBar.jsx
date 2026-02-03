@@ -1,7 +1,8 @@
-import React, {use, useState} from 'react'
+import React, { use, useState } from 'react'
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { IoIosSearch } from "react-icons/io";
+
 
 const SearchBar = () => {
     const [input, setInput] = useState('');
