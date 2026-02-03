@@ -1,8 +1,10 @@
 import chromadb
 import pandas as pd
+from pathlib import Path
 
 # Initialize ChromaDB
-client = chromadb.PersistentClient(path=r"D:\Code\video-recommendation-system\backend\data\chromadb")
+db_path = Path(__file__).resolve().parent.parent / "./data/chromadb"
+client = chromadb.PersistentClient(path=db_path)
 
 # Create or Get a collection
 collection = client.get_or_create_collection(
@@ -25,6 +27,8 @@ def populate_collection(dataset_path):
     print("Successfully Populated DB!")
 
 
-if __name__ == "__main__" : 
-    populate_collection(r"D:\Code\video-recommendation-system\backend\data\dataset1.csv")
-    populate_collection(r"D:\Code\video-recommendation-system\backend\data\dataset2.csv")
+if __name__ == "__main__" :
+    dataset1_path = Path(__file__).resolve().parent.parent / "./data/dataset1.csv"
+    dataset2_path = Path(__file__).resolve().parent.parent / "./data/dataset2.csv"
+    populate_collection(dataset1_path)
+    populate_collection(dataset2_path)
