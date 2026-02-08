@@ -1,14 +1,28 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from contextlib import asynccontextmanager
 
-from core.helper_funcs import get_videos, store_user_data
+from core.helper_funcs import get_videos, store_user_data, retrieve_candidates, search_video
+from core.db import load_data_into_memory
 from core.models import UserData
+
+
+@asynccontextmanager
+async def lifespan(app : FastAPI) : 
+    data = load_data_into_memory()
+    app.state.data = data
+    print("INFO : Dataset Loaded into memory...")
+    
+    yield
+    
+    del app.state.data
+    print("INFO : Dataset Unloaded into memory...")
 
 origins = [
     "http://localhost:5173",
 ]
 
-app = FastAPI()
+app = FastAPI(lifespan=lifespan)
 
 app.add_middleware(
     CORSMiddleware,
@@ -24,6 +38,7 @@ app.add_middleware(
 
 @app.get("/search/")
 async def endpoint(query:str) : 
+    return search_video(query, app.state.data)
     return get_videos(query)
 
 @app.post("/watch")

@@ -25,6 +25,19 @@ def populate_collection(dataset_path):
         documents=titles,
     )
     print("Successfully Populated DB!")
+          
+def load_data_into_memory() : 
+    dataset1_path = Path(__file__).resolve().parent.parent / "./data/dataset1.csv"
+    dataset2_path = Path(__file__).resolve().parent.parent / "./data/dataset2.csv"
+    
+    data1 = pd.read_csv(f"{dataset1_path}")
+    data2 = pd.read_csv(f"{dataset2_path}")
+    
+    data = pd.concat([data1, data2], ignore_index=True)
+    data.drop(['Unnamed: 0', 'Unnamed: 7'], inplace=True, axis=1)
+    
+    return data
+    
 
 
 if __name__ == "__main__" :
