@@ -1,6 +1,8 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from contextlib import asynccontextmanager
+from slowapi import Limiter
+from slowapi.util import get_remote_address
 
 from core.helper_funcs import get_videos, store_user_data, retrieve_candidates, search_video
 from core.db import load_data_into_memory
@@ -23,6 +25,7 @@ origins = [
 ]
 
 app = FastAPI(lifespan=lifespan)
+limiter = Limiter(key_func=get_remote_address)
 
 app.add_middleware(
     CORSMiddleware,
@@ -37,9 +40,9 @@ app.add_middleware(
 #     return get_videos(query)
 
 @app.get("/search/")
-async def endpoint(query:str) : 
+@limiter.limit("10/minute")
+async def endpoint(query:str, request : Request) : 
     return search_video(query, app.state.data)
-    return get_videos(query)
 
 @app.post("/watch")
 async def endpoint(userData: UserData) : 

@@ -13,4 +13,5 @@ dependencies = [
     "psycopg2>=2.9.11",
     "python-dateutil>=2.9.0.post0",
     "sentence-transformers>=5.2.2",
+    "slowapi>=0.1.9",
 ]

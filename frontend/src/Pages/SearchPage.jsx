@@ -22,6 +22,9 @@ function SearchPage() {
                 const response = await axios.get(`http://127.0.0.1:8000/search/?query=${queryParam}`);
                 setResult(response.data);
             } catch (error) {
+                if(error.response.status === 429){
+                    alert("Too Many Requests");
+                }
                 console.error(error);
             }
         };
