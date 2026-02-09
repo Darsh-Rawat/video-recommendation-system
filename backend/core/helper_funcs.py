@@ -15,7 +15,7 @@ def retrieve_candidates(query: str) -> dict:
     
     return result
 
-def rank_candidates(candidates: dict, similarity: dict, video_stats: list[dict]) -> list:
+def rank_candidates(candidates: dict, max_views, similarity: dict, video_stats: list[dict]) -> list:
     # final_score = {}
     
     for video in video_stats:
@@ -24,8 +24,12 @@ def rank_candidates(candidates: dict, similarity: dict, video_stats: list[dict])
         
         # Popularity Score
         pop_score = 0
-        pop = (math.log10(video["views"] + 1)/7) * (1+(video["likes"]/(video["views"] + 100)))
-        pop_score = min(pop, 1)
+        views_score = math.log10(video["views"] + 1) / math.log10(max_views + 1)
+
+        like_ratio = video["likes"] / (video["views"] + 1)
+        likes_score = min(like_ratio / 0.1, 1.0) 
+
+        pop_score = (0.7 * views_score) + (0.3 * likes_score)
         
         # Recency Score
         recency_score = 0
@@ -34,14 +38,14 @@ def rank_candidates(candidates: dict, similarity: dict, video_stats: list[dict])
         
         # Final Score
         final_score = 0
-        final_score = ((similarity_score * 0.6) + (pop_score * 0.2) + (recency_score * 0.1))
+        final_score = ((similarity_score * 0.7) + (pop_score * 0.2) + (recency_score * 0.1))
+        # final_score = similarity_score
         
         video['ranking_score'] = final_score
         
     
-    
     video_stats.sort(key=lambda x: x['ranking_score'], reverse=True)
-    
+
     return video_stats
         
 
@@ -58,11 +62,11 @@ def search_video(query: str, data) -> list:
     similarity = {}
     
     for i in range(len(ids)) : 
-        similarity[ids[i]] = semantic_relevance[i]
+        similarity[ids[i]] = 1 - semantic_relevance[i]
     
     video_stats = data.loc[data['video_id'].isin(ids)].to_dict(orient='records')
-    
-    return rank_candidates(candidates, similarity, video_stats)
+    max_views = data['views'].max()
+    return rank_candidates(candidates, max_views, similarity, video_stats)
     
 
 # Get Videos ID based on query

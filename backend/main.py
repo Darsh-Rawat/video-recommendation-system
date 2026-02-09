@@ -35,10 +35,6 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# @app.get("/search/{query}")
-# async def endpoint(query:str) : 
-#     return get_videos(query)
-
 @app.get("/search/")
 @limiter.limit("10/minute")
 async def endpoint(query:str, request : Request) : 
