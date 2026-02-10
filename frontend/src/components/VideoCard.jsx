@@ -19,7 +19,7 @@ return (
         <img src={thumbnailUrl} alt="test" className="thumbnail w-sm rounded-2xl" />
         <div className='right'>
             <h2 className='title font-bold'>{video.title}</h2>
-            <p>{video.views} views . {video.published_at} </p>
+            <p>{video.views} views . {video.published_at} . {video.likes} likes</p>
             <div className='channel-info w-fit flex gap-2 mt-2 hover:cursor-pointer' onClick={() => { alert("Channel Info") }}>
                 <div className='logo rounded-4xl bg-gray-700 w-7 h-7'><img src={logo} alt="logo" className='size-7' /></div>
                 <p className=' font-semibold'>{video.channel_name}</p>

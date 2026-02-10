@@ -1,6 +1,8 @@
 import React from 'react'
 import '../App.css'
 import SearchBar from '../components/SearchBar'
+import HomeCard from '../components/HomeCard'
+
 
 
 const Home = () => {
@@ -12,6 +14,21 @@ const Home = () => {
                     <h1 className='text-center font-bold text-xl'>Try searching to get started</h1>
                     <p className='text-center'>Start watching videos to help us build a feed of videos you'll love.</p>
                 </div>
+            </div>
+
+            <div className='grid grid-cols-4 place-items-center'>
+                <HomeCard />
+                <HomeCard />
+                <HomeCard />
+                <HomeCard />
+                <HomeCard />
+                <HomeCard />
+                <HomeCard />
+                <HomeCard />
+                <HomeCard />
+                <HomeCard />
+                <HomeCard />
+
             </div>
         </div>
     )
