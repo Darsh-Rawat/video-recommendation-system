@@ -6,7 +6,7 @@ import './App.css'
 import SearchBar from './components/SearchBar.jsx'
 import SearchResult from './components/SearchResult.jsx'
 import Home from './Pages/Home.jsx'
-import SearchPage from './pages/SearchPage';
+import SearchPage from './Pages/SearchPage';
 
 
 
