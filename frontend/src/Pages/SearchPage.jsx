@@ -7,6 +7,7 @@ import { useLocation } from 'react-router-dom';
 import axios from 'axios';
 import SearchBar from '../components/SearchBar.jsx';
 import SearchResult from '../components/SearchResult.jsx';
+import Navbar from '../components/Navbar'
 
 
 
@@ -22,7 +23,7 @@ function SearchPage() {
                 const response = await axios.get(`http://127.0.0.1:8000/search/?query=${queryParam}`);
                 setResult(response.data);
             } catch (error) {
-                if(error.response.status === 429){
+                if (error.response.status === 429) {
                     alert("Too Many Requests");
                 }
                 console.error(error);
@@ -34,11 +35,12 @@ function SearchPage() {
 
     return (
         <div className='App min-h-screen w-full bg-[#eee]'>
-            <div className='search-bar-container pt-[1.5vh] w-[40%] m-auto flex flex-col items-center min-w-50'>
-                <SearchBar />
+            <Navbar />
+            <div className='pt-[1.5vh] w-[40%] m-auto flex flex-col items-center min-w-50'>
                 <SearchResult data={result} />
-                <h1>Serach Page</h1>
+                <h1 className='mx-auto'>Serach Page</h1>
             </div>
+
         </div>
     )
 }
