@@ -1,7 +1,7 @@
 from sqlalchemy.orm import Session
 from sqlalchemy.exc import SQLAlchemyError
 import models.users as users_model
-from core.security import get_password_hash, verify_password
+from core.security import get_password_hash, verify_password, create_token
 from api.auth.schemas import LoginRequest, RegisterRequest
 
 def register_user_to_db(db: Session, registerRequest : RegisterRequest) : 
@@ -23,8 +23,11 @@ def register_user_to_db(db: Session, registerRequest : RegisterRequest) :
 def find_user_from_email(db: Session, email) :
     return db.query(users_model.Users).filter(users_model.Users.email == email).first()
 
-# def login_user(db: Session, loginRequest : LoginRequest) :
-#     if loginRequest.email == None or loginRequest.password == None :
-#         return 
-
-#     if verify_password(loginRequest.password, )
+def login_user(db: Session, loginRequest : LoginRequest) :
+    user = find_user_from_email(db, loginRequest.email)
+    if not user:
+        return None
+    if not verify_password(loginRequest.password, user.password):
+        return None
+    return user
+    
