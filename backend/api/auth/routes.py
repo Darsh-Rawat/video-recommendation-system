@@ -27,7 +27,6 @@ async def endpoint(loginRequest : LoginRequest, response:Response, db: Session =
     token = create_token(
         data={'sub':str(user.user_id)}
     )
-    print(token)
     response.set_cookie( key="access_token", 
                         value=token, 
                         httponly=True, 
