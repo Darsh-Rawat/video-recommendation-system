@@ -5,13 +5,17 @@ description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.13"
 dependencies = [
+    "bcrypt==4.3.0",
     "chromadb>=1.4.1",
     "dotenv>=0.9.9",
     "fastapi[all]>=0.128.0",
     "numpy>=2.4.1",
     "pandas>=3.0.0",
+    "passlib>=1.7.4",
     "psycopg2>=2.9.11",
     "python-dateutil>=2.9.0.post0",
+    "python-jose>=3.5.0",
     "sentence-transformers>=5.2.2",
     "slowapi>=0.1.9",
+    "sqlalchemy>=2.0.46",
 ]

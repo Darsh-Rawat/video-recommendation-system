@@ -6,9 +6,11 @@ from slowapi.util import get_remote_address
 
 from core.helper_funcs import get_videos, store_user_data, retrieve_candidates, search_video
 from core.db import load_data_into_memory
-from core.models import UserData
+from db.session import Base, engine
 
+from api.auth.routes import router as auth_router
 
+Base.metadata.create_all(bind=engine)
 @asynccontextmanager
 async def lifespan(app : FastAPI) : 
     data = load_data_into_memory()
@@ -25,6 +27,7 @@ origins = [
 ]
 
 app = FastAPI(lifespan=lifespan)
+app.include_router(auth_router)
 limiter = Limiter(key_func=get_remote_address)
 
 app.add_middleware(
@@ -40,11 +43,11 @@ app.add_middleware(
 async def endpoint(query:str, request : Request) : 
     return search_video(query, app.state.data)
 
-@app.post("/watch")
-async def endpoint(userData: UserData) : 
-    # print(type(userData.video_id))
-    # print(type(userData.title))
-    store_user_data(userData.video_id, userData.title)
+# @app.post("/watch")
+# async def endpoint(userData: UserData) : 
+#     # print(type(userData.video_id))
+#     # print(type(userData.title))
+#     store_user_data(userData.video_id, userData.title)
 
 
 if __name__ == "__main__":
