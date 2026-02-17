@@ -33,3 +33,8 @@ async def endpoint(loginRequest : LoginRequest, response:Response, db: Session =
                         secure=False, 
                         samesite="lax", 
                         max_age=ACCESS_TOKEN_EXPIRE_MINUTES * 60)
+
+
+@router.get("/me")
+async def endpoint(user : dict = Depends(get_current_user)) : 
+    return user

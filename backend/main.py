@@ -23,7 +23,8 @@ async def lifespan(app : FastAPI) :
     print("INFO : Dataset Unloaded into memory...")
 
 origins = [
-    "http://localhost:5173",
+    "http://127.0.0.1:5173",
+    "http://localhost:5173"
 ]
 
 app = FastAPI(lifespan=lifespan)
@@ -52,4 +53,4 @@ async def endpoint(query:str, request : Request) :
 
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run("main:app",reload=True)
+    uvicorn.run("main:app",host="0.0.0.0", port=8000, reload=True)
