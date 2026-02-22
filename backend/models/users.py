@@ -14,8 +14,9 @@ class Users(Base) :
 class UserInteractionData(Base) : 
     __tablename__ = "user_interaction_data"
     
-    user_id = Column(Integer, primary_key=True, index=True)
-    username = Column(String(50), unique=True, nullable=False)
-    video_id = Column(String, primary_key=True, index=True)
+    id = Column(Integer, primary_key=True, index=True)
+    user_id = Column(Integer)
+    username = Column(String(50), nullable=False)
+    video_id = Column(String, nullable=False)
     video_title = Column(String, nullable=False)
     created_at = Column(TIMESTAMP, server_default=func.now())
