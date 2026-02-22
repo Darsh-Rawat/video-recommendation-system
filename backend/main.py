@@ -1,14 +1,19 @@
-from fastapi import FastAPI, Request
+from fastapi import FastAPI, Request, Depends
 from fastapi.middleware.cors import CORSMiddleware
 from contextlib import asynccontextmanager
 from slowapi import Limiter
 from slowapi.util import get_remote_address
+from sqlalchemy.orm import Session
 
 from core.helper_funcs import get_videos, store_user_data, retrieve_candidates, search_video
 from core.db import load_data_into_memory
+from api.auth.dependencies import get_current_user
 from db.session import Base, engine
+from db.session import get_db
 
 from api.auth.routes import router as auth_router
+from schemas.users_interaction import VideoDetails
+from crud.users import store_user_interaction
 
 Base.metadata.create_all(bind=engine)
 @asynccontextmanager
@@ -44,11 +49,9 @@ app.add_middleware(
 async def endpoint(query:str, request : Request) : 
     return search_video(query, app.state.data)
 
-# @app.post("/watch")
-# async def endpoint(userData: UserData) : 
-#     # print(type(userData.video_id))
-#     # print(type(userData.title))
-#     store_user_data(userData.video_id, userData.title)
+@app.post("/watch")
+async def endpoint(videoDetails: VideoDetails, user : dict = Depends(get_current_user), db : Session = Depends(get_db)) : 
+    store_user_interaction(db, videoDetails, user)
 
 
 if __name__ == "__main__":

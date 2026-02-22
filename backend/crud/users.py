@@ -3,6 +3,7 @@ from sqlalchemy.exc import SQLAlchemyError
 import models.users as users_model
 from core.security import get_password_hash, verify_password, create_token
 from api.auth.schemas import LoginRequest, RegisterRequest
+from schemas.users_interaction import VideoDetails
 
 def register_user_to_db(db: Session, registerRequest : RegisterRequest) : 
     hashed_pwd = get_password_hash(registerRequest.password)
@@ -30,4 +31,24 @@ def login_user(db: Session, loginRequest : LoginRequest) :
     if not verify_password(loginRequest.password, user.password):
         return None
     return user
+
+def store_user_interaction(db: Session, videoDetails : VideoDetails, user_id) :
+    if not db : 
+        return False
+    username = db.query(users_model.Users).filter(users_model.Users.user_id == user_id).first().username
+
+    interaction_data = users_model.UserInteractionData(
+        user_id = user_id,
+        username = username,
+        video_id = videoDetails.video_id,
+        video_title = videoDetails.video_title
+    )
+    try : 
+        db.add(interaction_data)
+        db.commit()
+        db.refresh(interaction_data)
+        return interaction_data
+    except SQLAlchemyError as e : 
+        db.rollback()
+        print(e)
     

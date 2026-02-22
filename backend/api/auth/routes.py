@@ -35,6 +35,9 @@ async def endpoint(loginRequest : LoginRequest, response:Response, db: Session =
                         max_age=ACCESS_TOKEN_EXPIRE_MINUTES * 60)
 
 
-@router.get("/me")
+@router.get("/account")
 async def endpoint(user : dict = Depends(get_current_user)) : 
-    return user
+    if not user : 
+        raise HTTPException(status_code=401, detail="Login required")
+    else : 
+        return user

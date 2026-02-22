@@ -7,10 +7,10 @@ const VideoCard = ({ video }) => {
     const thumbnailUrl = `https://img.youtube.com/vi/${video.video_id}/0.jpg`;
 
     const handelWatch = async() => {
-    await axios.post("http://127.0.0.1:8000/watch/", {
-        video_id: video.id,
-        title: video.title,
-    });
+    await axios.post("http://localhost:8000/watch", {
+        video_id: video.video_id,
+        video_title: video.title,
+    }, { withCredentials: true });
     alert("Video Watched");
 };
 
