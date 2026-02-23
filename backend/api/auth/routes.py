@@ -30,8 +30,9 @@ async def endpoint(loginRequest : LoginRequest, response:Response, db: Session =
     response.set_cookie( key="access_token", 
                         value=token, 
                         httponly=True, 
-                        secure=False, 
+                        secure=True, 
                         samesite="lax", 
+                        domain = ".darshrawat.com",
                         max_age=ACCESS_TOKEN_EXPIRE_MINUTES * 60)
 
 
