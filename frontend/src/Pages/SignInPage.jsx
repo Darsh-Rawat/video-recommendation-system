@@ -2,6 +2,7 @@ import React from 'react'
 import { useState } from 'react'
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import api from '../api.js'
 
 const SignInPage = () => {
     const navigate = useNavigate();
@@ -10,7 +11,7 @@ const SignInPage = () => {
 
     const login = async (email, password) => {
         try {
-            const response = await axios.post("http://localhost:8000/auth/login", { email, password }, { withCredentials: true });
+            const response = await api.post("/auth/login", { email, password }, { withCredentials: true });
             navigate('/');
         } catch (error) {
             console.error(error);
@@ -19,7 +20,7 @@ const SignInPage = () => {
     
     const me = async () => {
         try {
-            const response = await axios.get("http://localhost:8000/auth/me", { withCredentials: true });
+            const response = await axios.get("/auth/me", { withCredentials: true });
             console.log(response.data);
         } catch (error) {
             console.error(error);

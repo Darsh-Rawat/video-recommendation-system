@@ -3,6 +3,7 @@ import { useState } from 'react'
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { CiAlignCenterH } from 'react-icons/ci';
+import api from '../api.js'
 
 const SignInPage = () => {
     const navigate = useNavigate();
@@ -12,7 +13,7 @@ const SignInPage = () => {
 
     const login = async (email, password) => {
         try {
-            const response = await axios.post("http://localhost:8000/auth/register", { email, username, password });
+            const response = await api.post("/auth/register", { email, username, password });
             navigate('/signin');
         } catch (error) {
             alert(error);
@@ -21,7 +22,7 @@ const SignInPage = () => {
 
     const me = async () => {
         try {
-            const response = await axios.get("http://localhost:8000/auth/me", { withCredentials: true });
+            const response = await axios.get("/auth/me", { withCredentials: true });
             console.log(response.data);
         } catch (error) {
             console.error(error);

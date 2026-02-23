@@ -4,12 +4,13 @@ import SearchBar from '../components/SearchBar'
 import { CiUser } from "react-icons/ci";
 import { CiHome } from "react-icons/ci";
 import { useNavigate } from 'react-router-dom';
+import api from '../api.js'
 
 const Navbar = () => {
     const navigate = useNavigate();
     const redirectToAccount = async () => {
         try {
-            const response = await axios.get("http://localhost:8000/auth/account", { withCredentials: true });
+            const response = await api.get("/auth/account", { withCredentials: true });
             navigate('/account');
         } catch (error) {
             if(error.response.status === 401) navigate('/signin');

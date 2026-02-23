@@ -8,6 +8,7 @@ import axios from 'axios';
 import SearchBar from '../components/SearchBar.jsx';
 import SearchResult from '../components/SearchResult.jsx';
 import Navbar from '../components/Navbar'
+import api from '../api.js'
 
 
 
@@ -20,7 +21,7 @@ function SearchPage() {
 
         const fetchData = async (queryParam) => {
             try {
-                const response = await axios.get(`http://127.0.0.1:8000/search/?query=${queryParam}`);
+                const response = await api.get(`/search/?query=${queryParam}`);
                 setResult(response.data);
             } catch (error) {
                 if (error.response.status === 429) {
@@ -38,7 +39,7 @@ function SearchPage() {
             <Navbar />
             <div className='pt-[1.5vh] w-[40%] m-auto flex flex-col items-center min-w-50'>
                 <SearchResult data={result} />
-                <h1 className='mx-auto'>Serach Page</h1>
+                <h1 className='mx-auto'>Search Page</h1>
             </div>
 
         </div>

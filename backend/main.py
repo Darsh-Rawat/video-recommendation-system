@@ -4,8 +4,10 @@ from contextlib import asynccontextmanager
 from slowapi import Limiter
 from slowapi.util import get_remote_address
 from sqlalchemy.orm import Session
+from fastapi.staticfiles import StaticFiles
+from fastapi.responses import FileResponse
 
-from core.helper_funcs import get_videos, store_user_data, retrieve_candidates, search_video
+from core.helper_funcs import search_video
 from core.db import load_data_into_memory
 from api.auth.dependencies import get_current_user
 from db.session import Base, engine
@@ -29,7 +31,8 @@ async def lifespan(app : FastAPI) :
 
 origins = [
     "http://127.0.0.1:5173",
-    "http://localhost:5173"
+    "http://localhost:5173",
+    "https://darshrawat.com"
 ]
 
 app = FastAPI(lifespan=lifespan)

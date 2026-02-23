@@ -1,13 +1,14 @@
 import React from 'react'
 import logo from "../assets/react.svg";
 import axios from 'axios';
+import api from '../api.js'
 
 
 const VideoCard = ({ video }) => {
     const thumbnailUrl = `https://img.youtube.com/vi/${video.video_id}/0.jpg`;
 
     const handelWatch = async() => {
-    await axios.post("http://localhost:8000/watch", {
+    await api.post("/watch", {
         video_id: video.video_id,
         video_title: video.title,
     }, { withCredentials: true });
