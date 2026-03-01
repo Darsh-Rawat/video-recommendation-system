@@ -21,7 +21,7 @@ function SearchPage() {
 
         const fetchData = async (queryParam) => {
             try {
-                const response = await api.get(`/search/?query=${queryParam}`);
+                const response = await api.get(`/search/?query=${queryParam}`, { withCredentials: true });
                 setResult(response.data);
             } catch (error) {
                 if (error.response.status === 429) {

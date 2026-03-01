@@ -51,4 +51,6 @@ def store_user_interaction(db: Session, videoDetails : VideoDetails, user_id) :
     except SQLAlchemyError as e : 
         db.rollback()
         print(e)
-    
+
+def get_user_interaction_data(db: Session, user_id) : 
+    return db.query(users_model.UserInteractionData).filter(users_model.UserInteractionData.user_id == user_id).all()
