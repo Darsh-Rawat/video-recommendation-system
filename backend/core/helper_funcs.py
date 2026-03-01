@@ -88,25 +88,4 @@ def get_videos(query:str) -> list :
         
     return videos
 
-# Store the user data for the Phase-2
-def store_user_data(video_id:str, title:str) -> None : 
-    conn = get_connection()
-    username = str(socket.gethostname())
-    try:
-        cur = conn.cursor()
-        cur.execute(
-            """
-            INSERT INTO user_data (username, video_id, title)
-            VALUES (%s, %s, %s)
-            """,
-            (username, video_id, title)
-        )
-        conn.commit()
-    finally:
-        release_connection(conn)
-        
 
-
-
-
-     

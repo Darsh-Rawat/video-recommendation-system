@@ -1,4 +1,4 @@
-from fastapi import FastAPI, Request, Depends
+from fastapi import FastAPI, Request, Depends, BackgroundTasks
 from fastapi.middleware.cors import CORSMiddleware
 from contextlib import asynccontextmanager
 from slowapi import Limiter
@@ -13,9 +13,12 @@ from api.auth.dependencies import get_current_user
 from db.session import Base, engine
 from db.session import get_db
 
-from api.auth.routes import router as auth_router
 from schemas.users_interaction import VideoDetails
 from crud.users import store_user_interaction
+from crud.metrics import store_metrics, update_stored_metrics
+
+from api.auth.routes import router as auth_router
+from api.feed.routes import router as feed_router
 
 Base.metadata.create_all(bind=engine)
 @asynccontextmanager
@@ -37,6 +40,7 @@ origins = [
 
 app = FastAPI(lifespan=lifespan)
 app.include_router(auth_router)
+app.include_router(feed_router)
 limiter = Limiter(key_func=get_remote_address)
 
 app.add_middleware(
@@ -49,12 +53,19 @@ app.add_middleware(
 
 @app.get("/search/")
 @limiter.limit("10/minute")
-async def endpoint(query:str, request : Request) : 
-    return search_video(query, app.state.data)
+async def endpoint(query:str, bg : BackgroundTasks, request : Request) : 
+    data = search_video(query, app.state.data)
+    try : 
+        user_id = get_current_user(request)
+    except Exception as e :
+        user_id = 0
+    bg.add_task(store_metrics, data, query, user_id)
+    return data
 
 @app.post("/watch")
-async def endpoint(videoDetails: VideoDetails, user : dict = Depends(get_current_user), db : Session = Depends(get_db)) : 
+async def endpoint(videoDetails: VideoDetails, bg : BackgroundTasks, user : dict = Depends(get_current_user), db : Session = Depends(get_db)) : 
     store_user_interaction(db, videoDetails, user)
+    bg.add_task(update_stored_metrics, db, videoDetails, user)
 
 
 if __name__ == "__main__":
