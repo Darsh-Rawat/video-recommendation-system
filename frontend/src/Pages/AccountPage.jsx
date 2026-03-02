@@ -18,7 +18,9 @@ const AccountPage = () => {
     return (
         <div>
             <Navbar></Navbar>
-            <div>AccountPage</div>
+            <div className='text-center w-full'>
+                <div>AccountPage</div>
+            </div>
         </div>
     )
 }
