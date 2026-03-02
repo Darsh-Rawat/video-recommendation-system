@@ -35,6 +35,13 @@ async def endpoint(loginRequest : LoginRequest, response:Response, db: Session =
                         domain = ".darshrawat.com",
                         max_age=ACCESS_TOKEN_EXPIRE_MINUTES * 60)
 
+@router.post("/logout")
+async def enpoint(response:Response) :
+    response.delete_cookie(
+        key="access_token",
+        domain=".darshrawat.com",
+        path="/"
+    )
 
 @router.get("/account")
 async def endpoint(user : dict = Depends(get_current_user)) : 

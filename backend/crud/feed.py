@@ -44,7 +44,6 @@ def buildUserVector(userId : int, db : Session) -> Embeddings:
         if id not in last_5_id : 
             last_5_id.append(id)
             recency.append(time)
-    print(last_5_id)
     
     # Fetch embeddings for last 5 videos
     item_embeddings = collection.get(ids=last_5_id, include=["embeddings"])
