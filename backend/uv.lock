@@ -77,7 +77,7 @@ requires-dist = [
     { name = "fastapi", extras = ["all"], specifier = ">=0.128.0" },
     { name = "numpy", specifier = ">=2.4.1" },
     { name = "pandas", specifier = ">=3.0.0" },
-    { name = "passlib", specifier = ">=1.7.4" },
+    { name = "passlib", specifier = "==1.7.4" },
     { name = "psycopg2", specifier = ">=2.9.11" },
     { name = "python-dateutil", specifier = ">=2.9.0.post0" },
     { name = "python-jose", specifier = ">=3.5.0" },
