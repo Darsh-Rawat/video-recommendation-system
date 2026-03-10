@@ -59,7 +59,7 @@ async def endpoint(query:str, bg : BackgroundTasks, request : Request) :
         user_id = get_current_user(request)
     except Exception as e :
         user_id = 0
-    bg.add_task(store_metrics, data, query, user_id)
+    # bg.add_task(store_metrics, data, query, user_id)
     return data
 
 @app.post("/watch")

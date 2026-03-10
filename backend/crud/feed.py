@@ -35,7 +35,7 @@ def calculate_weights(time : list) -> list :
     return weights
 
 def buildUserVector(userId : int, db : Session) -> Embeddings: 
-    last_5_videos = db.query(users_model.UserInteractionData.video_id, users_model.UserInteractionData.created_at).filter(users_model.UserInteractionData.user_id == userId).order_by(users_model.UserInteractionData.created_at.desc()).limit(15).all()
+    last_5_videos = db.query(users_model.UserInteractionData.video_id, users_model.UserInteractionData.watched_at).filter(users_model.UserInteractionData.user_id == userId).order_by(users_model.UserInteractionData.watched_at.desc()).limit(15).all()
     # last_5_id = [id for (id,time) in last_5_videos]
     # recency = [time for (id,time) in last_5_videos]
     last_5_id = []
@@ -66,4 +66,3 @@ def searchVectorDB(user_embedding : Embeddings, excluded_ids : list) -> list:
             video['title'] = relevant_videos['documents'][0][i]
             feed_videos.append(video)
     return feed_videos
-
